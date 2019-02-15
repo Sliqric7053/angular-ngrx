@@ -17,6 +17,7 @@ import { PageNotFoundComponent } from './home/page-not-found.component';
 
 /* Feature Modules */
 import { UserModule } from './user/user.module';
+import { reducer } from './products/state/product.reducer';
 
 @NgModule({
   imports: [
@@ -25,7 +26,7 @@ import { UserModule } from './user/user.module';
     HttpClientInMemoryWebApiModule.forRoot(ProductData),
     UserModule,
     AppRoutingModule,
-    StoreModule.forRoot({}),
+    StoreModule.forRoot(reducer),
   ],
   declarations: [
     AppComponent,
