@@ -8,6 +8,7 @@ import { ProductData } from './products/product-data';
 
 import { AppRoutingModule } from './app-routing.module';
 import { StoreModule } from '@ngrx/store';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
 import { AppComponent } from './app.component';
 import { ShellComponent } from './home/shell.component';
@@ -18,6 +19,7 @@ import { PageNotFoundComponent } from './home/page-not-found.component';
 /* Feature Modules */
 import { UserModule } from './user/user.module';
 import { reducer } from './products/state/product.reducer';
+import { environment } from '../environments/environment';
 
 @NgModule({
   imports: [
@@ -27,6 +29,11 @@ import { reducer } from './products/state/product.reducer';
     UserModule,
     AppRoutingModule,
     StoreModule.forRoot(reducer),
+    StoreDevtoolsModule.instrument({
+      name: 'APM Demo App DevTools',
+      maxAge: 25,
+      logOnly: environment.production,
+    }),
   ],
   declarations: [
     AppComponent,
