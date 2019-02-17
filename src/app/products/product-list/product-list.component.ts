@@ -32,9 +32,13 @@ export class ProductListComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.sub = this.productService.selectedProductChanges$.subscribe(
-      selectedProduct => (this.selectedProduct = selectedProduct)
-    );
+    // TODO: Unsubscribe
+
+    this.store
+      .pipe(select(fromProduct.getCurrentProduct))
+      .subscribe(currentProduct => {
+        this.selectedProduct = currentProduct;
+      });
 
     this.productService
       .getProducts()
@@ -42,6 +46,11 @@ export class ProductListComponent implements OnInit, OnDestroy {
         (products: Product[]) => (this.products = products),
         (err: any) => (this.errorMessage = err.error)
       );
+  //     this.store
+  //     .pipe(select(fromProduct.getProducts))
+  //     .subscribe(products => {
+  //   this.products = products;
+  // });
 
     // TODO: Unsubscribe
     this.store
@@ -60,10 +69,10 @@ export class ProductListComponent implements OnInit, OnDestroy {
   }
 
   newProduct(): void {
-    this.productService.changeSelectedProduct(this.productService.newProduct());
+    this.store.dispatch(new productActions.InitializeCurrentProduct());
   }
 
   productSelected(product: Product): void {
-    this.productService.changeSelectedProduct(product);
+    this.store.dispatch(new productActions.SetCurrentProduct(product));
   }
 }
