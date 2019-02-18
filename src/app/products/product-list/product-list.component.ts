@@ -45,7 +45,7 @@ export class ProductListComponent implements OnInit, OnDestroy {
         (products: Product[]) => (this.products = products),
         (err: any) => (this.errorMessage = err.error)
       );
-      
+
     // TODO: Unsubscribe
     this.store
       .pipe(select(fromProduct.getShowProductCode))
@@ -54,8 +54,7 @@ export class ProductListComponent implements OnInit, OnDestroy {
       });
   }
 
-  ngOnDestroy(): void {
-  }
+  ngOnDestroy(): void {}
 
   checkChanged(value: boolean): void {
     this.store.dispatch(new productActions.ToggleProductCode(value));
