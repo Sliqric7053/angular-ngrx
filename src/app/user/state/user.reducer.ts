@@ -41,6 +41,13 @@ export function reducer(state = initialState, action: UserActions) {
         ...state,
         currentUser: { ...state.currentUser },
       };
+
+    case UserActionTypes.SetUser:
+      return {
+        ...state,
+        currentUser: { ...action.payload },
+      };
+
     default:
       return state;
   }

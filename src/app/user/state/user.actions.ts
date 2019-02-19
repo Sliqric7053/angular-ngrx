@@ -1,8 +1,10 @@
 import { Action } from '@ngrx/store';
+import { User } from '../user';
 
 export enum UserActionTypes {
   MaskUserName = '[User] Mask User Name',
   GetCurrentUser = '[User] Get Current User',
+  SetUser = '[User] Set User',
 }
 
 export class MaskUserName implements Action {
@@ -14,4 +16,9 @@ export class GetCurrentUser implements Action {
   readonly type = UserActionTypes.GetCurrentUser;
 }
 
-export type UserActions = MaskUserName | GetCurrentUser;
+export class SetUser implements Action {
+  readonly type = UserActionTypes.SetUser;
+  constructor(public payload: User) {}
+}
+
+export type UserActions = MaskUserName | GetCurrentUser | SetUser;
