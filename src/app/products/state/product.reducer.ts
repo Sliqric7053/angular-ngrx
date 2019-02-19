@@ -126,6 +126,26 @@ export function reducer(
         products: addedProduct,
         error: '',
       };
+      case ProductActionTypes.CreateFail:
+      return {
+        ...state,
+        error: action.payload,
+      };
+    case ProductActionTypes.DeleteSuccess:
+      const deletedProduct = state.products.filter(
+        product => product.id !== action.payload
+      );
+      return {
+        ...state,
+        currentProductId: action.payload,
+        products: deletedProduct,
+        error: '',
+      };
+      case ProductActionTypes.DeleteFail:
+      return {
+        ...state,
+        error: action.payload,
+      };
     default:
       return state;
   }
