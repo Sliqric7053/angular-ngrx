@@ -15,6 +15,9 @@ export enum ProductActionTypes {
   Create = '[Product] Create',
   CreateSuccess = '[Product] Create Success',
   CreateFail = '[Product] Create Fail',
+  Delete = '[Product] Delete',
+  DeleteSuccess = '[Product] Delete Success',
+  DeleteFail = '[Product] Delete Fail',
 }
 
 export class ToggleProductCode implements Action {
@@ -68,6 +71,18 @@ export class CreateFail implements Action {
   readonly type = ProductActionTypes.CreateFail;
   constructor(public payload: string) {}
 }
+export class Delete implements Action {
+  readonly type = ProductActionTypes.Delete;
+  constructor(public payload: Product) {}
+}
+export class DeleteSuccess implements Action {
+  readonly type = ProductActionTypes.DeleteSuccess;
+  constructor(public payload: number) {}
+}
+export class DeleteFail implements Action {
+  readonly type = ProductActionTypes.DeleteFail;
+  constructor(public payload: string) {}
+}
 
 export type ProductActions =
   | ToggleProductCode
@@ -82,4 +97,7 @@ export type ProductActions =
   | UpdateFail
   | Create
   | CreateSuccess
-  | CreateFail;
+  | CreateFail
+  | Delete
+  | DeleteSuccess
+  | DeleteFail;
