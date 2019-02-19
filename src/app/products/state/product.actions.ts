@@ -6,12 +6,15 @@ export enum ProductActionTypes {
   SetCurrentProduct = '[Product] Set Current Product',
   ClearCurrentProduct = '[Product] Clear Current Product',
   InitializeCurrentProduct = '[Product] Initialize Current Product',
-  Load = '[Product Load]',
-  LoadSuccess = '[Product Load Success]',
-  LoadFail = '[Product Load Fail]',
-  Update = '[Product Update]',
-  UpdateSuccess = '[Product Update Success]',
-  UpdateFail = '[Product Update Fail]',
+  Load = '[Product] Load',
+  LoadSuccess = '[Product] Load Success',
+  LoadFail = '[Product] Load Fail',
+  Update = '[Product] Update',
+  UpdateSuccess = '[Product] Update Success',
+  UpdateFail = '[Product] Update Fail',
+  Create = '[Product] Create',
+  CreateSuccess = '[Product] Create Success',
+  CreateFail = '[Product] Create Fail',
 }
 
 export class ToggleProductCode implements Action {
@@ -53,6 +56,18 @@ export class UpdateFail implements Action {
   readonly type = ProductActionTypes.UpdateFail;
   constructor(public payload: string) {}
 }
+export class Create implements Action {
+  readonly type = ProductActionTypes.Create;
+  constructor(public payload: Product) {}
+}
+export class CreateSuccess implements Action {
+  readonly type = ProductActionTypes.CreateSuccess;
+  constructor(public payload: Product) {}
+}
+export class CreateFail implements Action {
+  readonly type = ProductActionTypes.CreateFail;
+  constructor(public payload: string) {}
+}
 
 export type ProductActions =
   | ToggleProductCode
@@ -64,4 +79,7 @@ export type ProductActions =
   | LoadFail
   | Update
   | UpdateSuccess
-  | UpdateFail;
+  | UpdateFail
+  | Create
+  | CreateSuccess
+  | CreateFail;
