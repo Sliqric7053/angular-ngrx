@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 
-import { Subscription } from 'rxjs';
+import { Subscription, Observable } from 'rxjs';
 
 import { Product } from '../product';
 import { ProductService } from '../product.service';
@@ -16,42 +16,27 @@ import * as productActions from '../state/product.actions';
 })
 export class ProductListComponent implements OnInit, OnDestroy {
   pageTitle = 'Products';
-  errorMessage: string;
+  errorMessage$: Observable<string>;
 
-  displayCode: boolean;
-
-  products: Product[];
+  displayCode$: Observable<boolean>;
 
   // Used to highlight the selected product in the list
-  selectedProduct: Product | null;
+  selectedProduct$: Observable<Product | null>;
+  products$: Observable<Product[]>;
 
-  constructor(
-    private productService: ProductService,
-    private store: Store<fromProduct.AppState>
-  ) {}
+  constructor(private store: Store<fromProduct.AppState>) {}
 
   ngOnInit(): void {
-    // TODO: Unsubscribe
+    this.selectedProduct$ = this.store.pipe(
+      select(fromProduct.getCurrentProduct)
+    );
 
-    this.store
-      .pipe(select(fromProduct.getCurrentProduct))
-      .subscribe(currentProduct => {
-        this.selectedProduct = currentProduct;
-      });
+    this.store.dispatch(new productActions.Load());
+    this.products$ = this.store.pipe(select(fromProduct.getProducts));
 
-    this.productService
-      .getProducts()
-      .subscribe(
-        (products: Product[]) => (this.products = products),
-        (err: any) => (this.errorMessage = err.error)
-      );
+    this.displayCode$ = this.store.pipe(select(fromProduct.getShowProductCode));
 
-    // TODO: Unsubscribe
-    this.store
-      .pipe(select(fromProduct.getShowProductCode))
-      .subscribe(showProductCode => {
-        this.displayCode = showProductCode;
-      });
+    this.errorMessage$ = this.store.pipe(select(fromProduct.getError));
   }
 
   ngOnDestroy(): void {}
