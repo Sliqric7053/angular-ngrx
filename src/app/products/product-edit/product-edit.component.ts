@@ -160,15 +160,7 @@ export class ProductEditComponent implements OnInit, OnDestroy {
         const p = { ...this.product, ...this.productForm.value };
 
         if (p.id === 0) {
-          this.productService
-            .createProduct(p)
-            .subscribe(
-              product =>
-                this.store.dispatch(
-                  new productActions.SetCurrentProduct(product)
-                ),
-              (err: any) => (this.errorMessage = err.error)
-            );
+          this.store.dispatch(new productActions.Create(p));
         } else {
           this.store.dispatch(new productActions.Update(p));
         }
