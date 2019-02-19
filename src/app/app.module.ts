@@ -20,6 +20,7 @@ import { PageNotFoundComponent } from './home/page-not-found.component';
 import { UserModule } from './user/user.module';
 import { reducer } from './products/state/product.reducer';
 import { environment } from '../environments/environment';
+import { EffectsModule } from '@ngrx/effects';
 
 @NgModule({
   imports: [
@@ -29,6 +30,7 @@ import { environment } from '../environments/environment';
     UserModule,
     AppRoutingModule,
     StoreModule.forRoot(reducer),
+    EffectsModule.forRoot([]),
     StoreDevtoolsModule.instrument({
       name: 'APM Demo App DevTools',
       maxAge: 25,
