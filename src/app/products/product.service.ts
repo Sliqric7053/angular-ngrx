@@ -45,13 +45,13 @@ export class ProductService {
     const url = `${this.productsUrl}/${id}`;
     return this.http.delete<Product>(url, { headers: headers })
       .pipe(
-        tap(data => console.log('deleteProduct: ' + id)),
-        tap(data => {
-          const foundIndex = this.products.findIndex(item => item.id === id);
-          if (foundIndex > -1) {
-            this.products.splice(foundIndex, 1);
-          }
-        }),
+        // tap(data => console.log('deleteProduct: ' + id)),
+        // tap(data => {
+        //   const foundIndex = this.products.findIndex(item => item.id === id);
+        //   if (foundIndex > -1) {
+        //     this.products.splice(foundIndex, 1);
+        //   }
+        // }),
         catchError(this.handleError)
       );
   }
