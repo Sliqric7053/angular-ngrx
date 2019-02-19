@@ -45,6 +45,13 @@ export class LoginComponent implements OnInit {
       const userName = loginForm.form.value.userName;
       const password = loginForm.form.value.password;
       this.authService.login(userName, password);
+      this.store.dispatch(
+        new userActions.SetUser({
+          id: Math.floor(Math.random() * 1000),
+          userName: userName,
+          isAdmin: false,
+        })
+      );
 
       if (this.authService.redirectUrl) {
         this.router.navigateByUrl(this.authService.redirectUrl);
