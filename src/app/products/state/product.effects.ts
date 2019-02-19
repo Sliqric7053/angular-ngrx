@@ -51,4 +51,15 @@ export class ProductEffects {
       );
     })
   );
+  @Effect()
+  deleteProduct$: Observable<Action> = this.actions$.pipe(
+    ofType(productActions.ProductActionTypes.Delete),
+    map((action: productActions.Delete) => action.payload),
+    mergeMap((product: Product) => {
+      return this.productService.deleteProduct(product.id).pipe(
+        map(() => new productActions.DeleteSuccess(product.id)),
+        catchError(e => of(new productActions.DeleteFail(e)))
+      );
+    })
+  );
 }
