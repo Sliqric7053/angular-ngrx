@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { Subscription, Observable } from 'rxjs';
 
 import { Product } from '../../product';
@@ -10,6 +10,7 @@ import * as productActions from '../../state/product.actions';
 
 @Component({
   templateUrl: './product-shell.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProductShellComponent implements OnInit {
   // Used to highlight the selected product in the list
