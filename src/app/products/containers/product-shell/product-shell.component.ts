@@ -1,45 +1,35 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-
+import { Component, OnInit } from '@angular/core';
 import { Subscription, Observable } from 'rxjs';
 
-import { Product } from '../product';
-import { ProductService } from '../product.service';
+import { Product } from '../../product';
+import { ProductService } from '../../product.service';
 
 import { Store, select } from '@ngrx/store';
-import * as fromProduct from '../state/product.reducer';
-import * as productActions from '../state/product.actions';
+import * as fromProduct from '../../state/product.reducer';
+import * as productActions from '../../state/product.actions';
 
 @Component({
-  selector: 'pm-product-list',
-  templateUrl: './product-list.component.html',
-  styleUrls: ['./product-list.component.css'],
+  templateUrl: './product-shell.component.html',
 })
-export class ProductListComponent implements OnInit, OnDestroy {
-  pageTitle = 'Products';
-  errorMessage$: Observable<string>;
-
-  displayCode$: Observable<boolean>;
-
+export class ProductShellComponent implements OnInit {
   // Used to highlight the selected product in the list
-  selectedProduct$: Observable<Product | null>;
+  errorMessage$: Observable<string>;
+  displayCode$: Observable<boolean>;
   products$: Observable<Product[]>;
+  selectedProduct$: Observable<Product>;
 
   constructor(private store: Store<fromProduct.AppState>) {}
 
   ngOnInit(): void {
+    this.store.dispatch(new productActions.Load());
+
+    this.products$ = this.store.pipe(select(fromProduct.getProducts));
+    this.errorMessage$ = this.store.pipe(select(fromProduct.getError));
     this.selectedProduct$ = this.store.pipe(
       select(fromProduct.getCurrentProduct)
     );
-
-    this.store.dispatch(new productActions.Load());
-    this.products$ = this.store.pipe(select(fromProduct.getProducts));
-
     this.displayCode$ = this.store.pipe(select(fromProduct.getShowProductCode));
-
-    this.errorMessage$ = this.store.pipe(select(fromProduct.getError));
   }
-
-  ngOnDestroy(): void {}
 
   checkChanged(value: boolean): void {
     this.store.dispatch(new productActions.ToggleProductCode(value));
