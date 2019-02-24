@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 
 import { AuthService } from './auth.service';
 
 import { Store, select } from '@ngrx/store';
-import * as fromUserState from '../user/state/user.reducer';
+import * as fromUserState from '../user/state';
 import * as userActions from './state/user.actions';
 
 @Component({
